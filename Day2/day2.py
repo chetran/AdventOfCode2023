@@ -33,7 +33,6 @@ with open('input.txt', 'r') as input:
             'green' : 0, 
             'blue' : 0
         }
-        validGame = True
         game = re.split(':', row)
         turn = re.split('\s', game[1].strip()) # cubes from each game
         for eachGrab in range(0, len(turn), 2):
