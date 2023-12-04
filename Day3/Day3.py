@@ -1,4 +1,4 @@
-
+from dataclasses import dataclass
 
 with open("input.txt", "r") as f:
     lines = [l.strip() for l in f.readlines()]
@@ -34,19 +34,13 @@ for i in range(len(lines)):
         if hasAdjacentSymbol(lines, i, j):
             numberHasSymbol = True
 
-print(sum)
+print(sum) # 520135
 
+@dataclass
 class gearNum:
-    def __init__(self, number, span, row) -> None:
-        self.number = number 
-        self.span = span 
-        self.row = row 
-    
-    def __repr__(self) -> str:
-        return f'{self.number}, {self.span[0]}, {self.span[1]}, {self.row}'
-    
-    def equal(self, object):
-        return self.number == object.number and self.span == object.span and self.row == object.row
+    number: int
+    span: tuple
+    row: int
 
 def getNumber(arr, row, col):
     length = len(arr[row])
@@ -72,7 +66,7 @@ def getGearRatio(arr, row, col):
                 adding = True
                 number = getNumber(arr, row+i, col+j)
                 for gN in gearNums:
-                    if gN.equal(number):
+                    if gN.__eq__(number):
                         adding = False
                 if adding:
                     gearNums.append(number)
@@ -85,4 +79,4 @@ for i in range(len(lines)):
         if lines[i][j] == '*':
             sum += getGearRatio(lines, i, j)
 
-print(sum)
+print(sum) #72514855
