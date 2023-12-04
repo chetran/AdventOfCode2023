@@ -1,3 +1,5 @@
+
+
 with open("input.txt", "r") as f:
     lines = [l.strip() for l in f.readlines()]
 
@@ -17,6 +19,7 @@ def hasAdjacentSymbol(arr, row, col):
 
 # Solution 1
 sum = 0
+numbers = []
 for i in range(len(lines)):
     number = ""
     numberHasSymbol = False
@@ -30,5 +33,39 @@ for i in range(len(lines)):
             numberHasSymbol = False
         if hasAdjacentSymbol(lines, i, j):
             numberHasSymbol = True
+
+print(sum)
+
+def getNumber(arr, row, col):
+    length = len(arr[row])
+    goLeft = col - 1
+    goRight = col + 1
+    left = ""
+    right = ""
+    while(goLeft >=  0 and goLeft < length and arr[row][goLeft].isdigit()):
+        left = arr[row][goLeft] + left
+        goLeft -= 1
+    while(goRight >=  0 and goRight < length and arr[row][goRight].isdigit()):
+        right += arr[row][goRight]
+        goRight += 1
+    return int(left + arr[row][col] + right)
+        
+
+def getGearRatio(arr, row, col):
+    count = 0
+    gearRatio = 1
+    for i in range(-1, 2):
+        for j in range(-1, 2):
+            if (arr[row+i][col+j].isdigit()):
+                gearRatio *= getNumber(arr, row+i, col+j)
+                count += 1
+                break
+    return gearRatio if count == 2 else 0
+
+sum = 0
+for i in range(len(lines)):
+    for j in range(len(lines[i])):
+        if lines[i][j] == '*':
+            sum += getGearRatio(lines, i, j)
 
 print(sum)
