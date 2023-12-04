@@ -18,7 +18,8 @@ for cardNmbr in range(len(lines)):
     numbers = re.findall('\d+', cardInfo[1])
     for number in numbers:
         if number in winnings:
-            count = 1 if count == 0 else count * 2 
+            count = 1 if count == 0 else count * 2
+            # Part 2 
             matchings += 1 
             scoreCard = (cardNmbr + 1) + matchings
             # The number of copies of a certain card will impact the amount of cards won 
