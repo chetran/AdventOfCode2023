@@ -36,6 +36,18 @@ for i in range(len(lines)):
 
 print(sum)
 
+class gearNum:
+    def __init__(self, number, span, row) -> None:
+        self.number = number 
+        self.span = span 
+        self.row = row 
+    
+    def __repr__(self) -> str:
+        return f'{self.number}, {self.span[0]}, {self.span[1]}, {self.row}'
+    
+    def equal(self, object):
+        return self.number == object.number and self.span == object.span and self.row == object.row
+
 def getNumber(arr, row, col):
     length = len(arr[row])
     goLeft = col - 1
@@ -48,19 +60,24 @@ def getNumber(arr, row, col):
     while(goRight >=  0 and goRight < length and arr[row][goRight].isdigit()):
         right += arr[row][goRight]
         goRight += 1
-    return int(left + arr[row][col] + right)
+    return gearNum(int(left + arr[row][col] + right), (goLeft+1, goRight+1), row)
         
 
 def getGearRatio(arr, row, col):
-    count = 0
     gearRatio = 1
+    gearNums = []
     for i in range(-1, 2):
         for j in range(-1, 2):
             if (arr[row+i][col+j].isdigit()):
-                gearRatio *= getNumber(arr, row+i, col+j)
-                count += 1
-                break
-    return gearRatio if count == 2 else 0
+                adding = True
+                number = getNumber(arr, row+i, col+j)
+                for gN in gearNums:
+                    if gN.equal(number):
+                        adding = False
+                if adding:
+                    gearNums.append(number)
+                    gearRatio *= number.number
+    return gearRatio if len(gearNums) == 2 else 0
 
 sum = 0
 for i in range(len(lines)):
